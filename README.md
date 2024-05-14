@@ -148,3 +148,119 @@ Notes
         res.end(txt);
         }).listen(8080);
     ```
+#### Node.js File system module
+- Node.js as a File Server
+    - The Node.js file system module allows you to work with the file system on your computer.
+    - To include the File System module, use the require() method:
+
+    ```JavaScript
+        var fs = require('fs');
+    ```
+- Common use for the File System module:
+    - Read files
+    - Create files
+    - Update files
+    - Delete files
+    - Rename files
+
+### Read Files using Node.js
+- The ``fs.readFile()`` method is used to read files on your computer.
+- Assume we have the following HTML file (located in the same folder as Node.js):
+``demo_file_1.html``
+```bash
+    <html>
+        <body>
+            <h1>My Header</h1>
+            <p>My paragraph.</p>
+        </body>
+    </html>
+```
+- Create a Node.js file that reads the HTML file, and return the content:
+
+```JavaScript
+    var http = require('http');
+
+    var fs = require('fs');
+
+    http.createServer(function (req, res) {
+
+        fs.readFile('demo_file_1.html', function(err, data) {
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
+            return res.end();
+        });
+
+    }).listen(8080);
+```
+
+### Create Files using Node.js
+- The File System module has methods for creating new files:
+```bash
+    fs.appendFile()
+    fs.open()
+    fs.writeFile()
+```
+- The fs.appendFile() method appends specified content to a file. 
+- If the file does not exist, the file will be created:
+
+```bash
+    var fs = require('fs');
+
+    fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+
+    if (err) throw err;
+        console.log('Saved!');
+    });
+```
+
+- The fs.open() method takes a "flag" as the second argument, if the flag is "w" for "writing", the specified file is opened for writing. If the file does not exist, an empty file is created:
+
+**Example below**
+```JavaScript
+    var fs = require('fs');
+
+    fs.open('mynewfile2.txt', 'w', function (err, file) {
+    if (err) throw err;
+    console.log('Saved!');
+    });
+```
+
+### Update a File using Node.js
+The File System module has methods for updating files:
+```bash
+    fs.appendFile()
+    fs.writeFile()
+```
+- The fs.appendFile() method appends the specified content at the end of the specified file:
+
+**Example**
+```JavaScript
+    var fs = require('fs');
+
+    fs.appendFile('mynewfile1.txt', ' This is my text.', function (err) {
+    if (err) throw err;
+    console.log('Updated!');
+    });
+```
+
+### Node.js URL Module
+- The **URL** module splits up a web address into readable parts.
+- **To include**, use the ``require()``
+```Js
+    var url = require('url');
+```
+- Parse an address with the ``url.parse() method``, and it will return a URL object with each part of the address as properties:
+
+```Js
+    var url = require('url');
+    var adr = 'http://localhost:8080/default.htm?year=2024&month=october';
+    var q = url.parse(adr, true);
+
+    console.log(q.host); //returns 'localhost:8080'
+    console.log(q.pathname); //returns '/default.htm'
+    console.log(q.search); //returns '?year=2024&month=february'
+
+    var qdata = q.query; //returns an object: { year: 2024, month: 'february' }
+    console.log(qdata.month); //returns 'october'
+```
